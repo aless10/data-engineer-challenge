@@ -15,11 +15,10 @@ redis_db = StrictRedis()
 
 class TaskExecutor(object):
 
-    def __init__(self, request_schema_class, response_schema_class, response_model_class, task_name):
+    def __init__(self, request_schema_class, response_schema_class, response_model_class):
         self.request_schema = request_schema_class()
         self.response_schema = response_schema_class()
         self.response_model_class = response_model_class
-        self.task_name = task_name
         self.scheduler = None
         self.response = None
 
@@ -33,7 +32,7 @@ class TaskExecutor(object):
             try:
                 self.scheduler = request_model.scheduler
                 task_payload = request_model.prepare_task_payload()
-                scheduler_response = self.scheduler.schedule(self.task_name, task_payload)
+                scheduler_response = self.scheduler.schedule(task_payload)
                 response_model = self.response_model_class.from_scheduler_response(scheduler_response, request_model)
             except SchedulerTimedOut as e:
                 response_model = self.response_model_class.for_failure(e)

@@ -19,7 +19,7 @@ def register_error_handlers(app):
 
 
 def setup_logging(app):
-    fileConfig(app.config.LOG_CONFIG_FILE, defaults=os.environ)
+    fileConfig(app.config["LOG_CONFIG_FILE"], defaults=os.environ)
 
 
 def create_app():
