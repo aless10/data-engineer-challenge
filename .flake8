@@ -1,0 +1,9 @@
+[flake8]
+max-line-length = 120
+max-complexity = 8
+show-source = True
+show-pep8 = True
+jobs = 2
+doctests = True
+benchmark = True
+ignore =

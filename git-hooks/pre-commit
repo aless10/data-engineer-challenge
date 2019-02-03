@@ -1,0 +1,39 @@
+#!/bin/sh
+
+SRCS=$(git diff --cached --name-only --diff-filter=ACM --no-color | grep --color=never -e '\.py$')
+#set -x
+
+[ -z "${SRCS}" ] && exit 0
+
+echo flake8
+flake8 ${SRCS}
+if [ $? != 0 ]; then
+	echo "Code fails pyflake check."
+	exit 1
+fi
+
+echo "flake8 checks passed"
+
+[ -e "${GIT_DIR}/MERGE_MODE" ] && exit 0
+
+echo pylint
+pylint ${SRCS}
+if [ $? != 0 ]; then
+	echo "Code fails pylint py3k check."
+	exit 1
+fi
+
+echo "pylint checks passed"
+
+echo "Running tests..."
+  pytest tests/
+  code=$?
+
+  if [ "$code" -eq "0" ]; then
+      echo
+      echo "All tests passed. Continuing..."
+  else
+      echo
+      echo "Please (re)check tests! :("
+      exit 1
+  fi;
