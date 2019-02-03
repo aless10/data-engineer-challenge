@@ -70,7 +70,8 @@ disable=all
 # it should appear only once). See also the "--disable" option for examples.
 
 enable=import-error,
-       import-self,reimported,
+       import-self,
+       reimported,
        wildcard-import,
        misplaced-future,
        relative-import,
@@ -103,29 +104,7 @@ enable=import-error,
 	   xrange-builtin,
 	   bad-python3-import,
 	   raising-string,
-	   deprecated-types-field,
-	   range-builtin-not-iterating,
-	   dict-iter-method,
-	   metaclass-assignment,
-	   comprehension-escape,
-	   cmp-builtin,
-	   using-cmp-argument,
-	   parameter-unpacking,
-	   zip-builtin-not-iterating,
-	   exception-message-attribute,
-	   next-method-called,
-	   next-method-defined,
-	   filter-builtin-not-iterating,
-	   eq-without-hash,
-	   map-builtin-not-iterating,
-	   unicode-builtin,
-	   no-absolute-import,
-	   dict-keys-not-iterating,
-	   dict-values-not-iterating,
-	   dict-items-not-iterating,
-	   old-division,
-	   round-builtin
-py3k = yes
+	   deprecated-types-field
 
 [REPORTS]
 
