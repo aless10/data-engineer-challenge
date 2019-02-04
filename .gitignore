@@ -71,13 +71,6 @@ celerybeat-schedule
 # virtualenv
 venv*
 
-# Spyder project settings
-.spyderproject
-.spyproject
-
-# Rope project settings
-.ropeproject
-
 # MACOS
 .DS_Store
 
@@ -88,6 +81,8 @@ venv*
 # mypy
 .mypy_cache/
 
+# logs
+logs/
 
 # redis
 *.rdb
