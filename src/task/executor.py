@@ -16,7 +16,7 @@ redis_db = StrictRedis()
 class TaskExecutor(object):
 
     def __init__(self, request_schema_class, response_schema_class, response_model_class):
-        self.request_schema = request_schema_class()
+        self.request_schema = request_schema_class(strict=True)
         self.response_schema = response_schema_class()
         self.response_model_class = response_model_class
         self.scheduler = None
