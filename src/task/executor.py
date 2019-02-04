@@ -23,7 +23,7 @@ class TaskExecutor(object):
         self.response = None
 
     def run(self):
-        request_body = request.get_json(force=True)
+        request_body = request.form
         request_model, errors = self.request_schema.load(request_body)
 
         if errors:

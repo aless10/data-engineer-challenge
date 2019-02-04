@@ -6,7 +6,7 @@ from __future__ import absolute_import
 import abc
 
 
-class Scheduler(abc.ABCMeta):
+class Scheduler(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def close(self):

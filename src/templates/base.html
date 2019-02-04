@@ -19,14 +19,18 @@
         {% include "header.html" %}
     {% endblock %}
 
-    {% block request %}
-        {% include "request.html" %}
-    {% endblock request %}
-
-    {% block response %}
-        {% include "response.html" %}
-    {% endblock response %}
-
+    <div class="row">
+      <div class="col s6">
+        {% block request %}
+            {% include "request.html" %}
+        {% endblock request %}
+      </div>
+      <div class="col s6">
+        {% block response %}
+            {% include "response.html" %}
+        {% endblock response %}
+      </div>
+    </div>
     <!--JavaScript at end of body for optimized loading-->
     <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.3.1.min.js')}}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-ui.min.js')}}"></script>
