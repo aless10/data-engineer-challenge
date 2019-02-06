@@ -8,7 +8,7 @@ from flask.views import MethodView
 from src.schedulers.celery import CeleryScheduler
 from src.schedulers.gearman import GearmanScheduler
 from src.schema.task import RequestSchema, ResponseSchema
-from src.model.task import TaskRequest
+from src.model.task import TaskResponse
 from src.task.executor import TaskExecutor
 
 
@@ -18,6 +18,6 @@ class TaskView(MethodView):
         return render_template('index.html', schedulers=[CeleryScheduler, GearmanScheduler])
 
     def post(self):
-        executor = TaskExecutor(RequestSchema, ResponseSchema, TaskRequest)
+        executor = TaskExecutor(RequestSchema, ResponseSchema, TaskResponse)
         executor.run()
         return executor.response

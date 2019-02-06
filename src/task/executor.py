@@ -31,9 +31,9 @@ class TaskExecutor(object):
             response_model = self.response_model_class.for_failure('Failed Schema Validation', errors)
         else:
             try:
-                self.scheduler = SCHEDULERS[request_model.scheduler].make()
                 task_payload = request_model.prepare_task_payload()
-                scheduler_response = self.scheduler.schedule(task_payload)
+                self.scheduler = SCHEDULERS[request_model.scheduler].make()
+                scheduler_response = self.scheduler.schedule(task_name="task", payload=task_payload)
                 response_model = self.response_model_class.from_scheduler_response(scheduler_response, request_model)
             except SchedulerTimedOut as e:
                 response_model = self.response_model_class.for_failure(e)
