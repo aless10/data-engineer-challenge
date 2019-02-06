@@ -1,0 +1,254 @@
+<script type="text/javascript">
+
+  var loadingAnimation = '<div class="preloader-wrapper small active">\
+                            <div class="spinner-layer spinner-green-only">\
+                              <div class="circle-clipper left">\
+                                <div class="circle"></div>\
+                              </div><div class="gap-patch">\
+                                <div class="circle"></div>\
+                              </div><div class="circle-clipper right">\
+                                <div class="circle"></div>\
+                              </div>\
+                            </div>\
+                          </div>';
+  function animateLoad (element) {
+    element.innerHTML = loadingAnimation;
+  }
+
+</script>
+
+
+<script type="text/javascript">
+
+  $(document).on('click', '.animate-button', function(e) {
+    animateLoad(this);
+  })
+
+</script>
+
+<script type="text/javascript">
+  
+  function change_filter(url) {
+    $(document).on('submit','#myFilterPermission', function(e){
+      e.preventDefault();
+      var masterid_inputs = $(".masterid_input:checked");
+      var agentid_inputs = $(".agentid_input:checked");
+      var extension_inputs = $(".extension_input:checked");
+
+      var masterid_filter = [];
+      var agentid_filter = [];
+      var extension_filter = [];
+      
+      for (i=0; i<masterid_inputs.length; i++ ) {
+        masterid_filter.push(masterid_inputs[i].name);
+      }
+      for (i=0; i<agentid_inputs.length; i++ ) {
+        agentid_filter.push(agentid_inputs[i].name);
+      }
+      for (i=0; i<extension_inputs.length; i++ ) {
+        extension_filter.push(extension_inputs[i].name);
+      }
+      myUrl = url; 
+      $.ajax({
+          beforeSend: function(){
+            if ( masterid_filter.length == 0 || agentid_filter.length == 0 || extension_filter.length == 0) {
+              $("#permission-span").html('Il filtro non può essere vuoto');
+              $("#modalPermissionError").modal("open");
+              return false;
+            }
+          },
+          type:'POST',
+          url: myUrl,
+          data: {
+              'masterid_list':masterid_filter,
+              'agentid_list':agentid_filter,
+              'extension_list':extension_filter
+          },
+      
+      success:function(jsondata){
+        result = jsondata[0];
+        label = jsondata[2];
+        if (label) {
+          $('#date-filter')[0].innerHTML = getInfoMessages('Filtro: ' + label);
+          }
+        // $('#permission-filter')[0].innerHTML = "";
+        // if ({{ session['master_id_list']|length }} > 1) {
+        //   $('#permission-filter')[0].innerHTML = getInfoMessages('Filtro per Masterid: ' + jsondata[1]['master_id_filter']);
+        // }
+        // if ({{ session['agent_id_list']|length }} > 1) {
+        //   $('#permission-filter')[0].innerHTML += getInfoMessages('Filtro per AgentId: ' + jsondata[1]['agent_id_filter']);
+        //   }
+        // if ({{ session['extension_list']|length }} > 1) {
+        //   $('#permission-filter')[0].innerHTML += getInfoMessages('Filtro per Extension: ' + jsondata[1]['extension_filter']);
+        // }
+        $("#chart-div").hide();
+        if (chart !=null){
+            chart.destroy();
+          }
+        if (typeof num_data_visualized !== 'undefined') {  
+          createChart(result, num_data_visualized);
+        }
+        else {
+          createChart(result);  
+        }
+        if (typeof t != "undefined") {
+          t.clear().draw();
+          createTable(result);
+          }
+          
+        }
+    });
+
+    });
+  }
+
+</script>
+
+
+
+
+<script type="text/javascript">
+  
+  
+  
+</script>
+
+
+
+<script>
+
+  function filterDaysButton(myUrl) {
+    $(document).on('click', "#myDaysButton", function(e) { 
+        e.preventDefault();
+        var period = $("#myDays").val();
+        $.ajax({
+              type:'GET',
+              url: myUrl,
+              data: {
+                'period':period,
+              }, 
+              
+              error: function(e) {
+                console.log(e);
+                },
+          
+              success:function(jsondata){
+                myDays.value = '';
+                result = jsondata[0];
+                label = jsondata[1];
+                if (label) {
+                  $('#date-filter')[0].innerHTML = getInfoMessages('Filtro: ' + label, 'info', 3, true);
+                }
+                $("#chart-div").hide();
+                if (chart !=null){
+                  chart.destroy();
+                  }
+                if (typeof num_data_visualized !== 'undefined') {  
+                  createChart(result, num_data_visualized);
+                }
+                else {
+                  createChart(result);  
+                }
+                if (typeof t != "undefined") {
+                  t.clear().draw();
+                  createTable(result);
+                  }
+              }
+            })
+      });
+
+}
+</script>
+
+<script>
+
+  function filterDays(myUrl) {
+
+  $(document).on('change', "#myOptionView", function(e) { 
+      e.preventDefault();
+      var period = $("#myOptionViewSelect").val();
+      $.ajax({
+            type:'GET',
+            url: myUrl,
+            data: {
+              'period':period,
+            }, 
+            
+            error: function(e) {
+              console.log(e);
+              },
+        
+            success:function(jsondata){
+              result = jsondata[0];
+              label = jsondata[1]
+              $("#chart-div").hide();
+              if (label) {
+                $('#date-filter')[0].innerHTML = getInfoMessages('Filtro: ' + label, 'info', 3, true);
+              }
+              if (chart !=null){
+                chart.destroy();
+              }
+              if (typeof num_data_visualized !== 'undefined') {  
+                createChart(result, num_data_visualized);
+              }
+              else {
+                createChart(result);  
+              }
+              if (typeof t != "undefined") {
+                t.clear().draw();
+                createTable(result);
+                }
+            }
+          })
+    });
+  }
+</script>
+
+<script type="text/javascript">
+
+  function dateForm(myUrl) {
+
+    $(document).on('submit','#myForm', function(e){
+        e.preventDefault();
+        $.ajax({
+          beforeSend: function(){
+            if ($('input[name=datepicker_from]').val() == "" && $('input[name=datepicker_to]').val() == "") {
+              $("#permission-span").html('Il filtro non può essere vuoto');
+              $("#modalPermissionError").modal("open");
+              return false;
+            }
+          },  
+          type:'POST',
+          url: myUrl,
+          data: {
+              'datepicker_from':$('input[name=datepicker_from]').val(),
+              'datepicker_to':$('input[name=datepicker_to]').val(),
+          },
+         
+          success:function(jsondata){
+              result = jsondata[0];
+              label = jsondata[1];
+              $("#chart-div").hide();
+              console.log(result.length);
+              if (label) {
+                $('#date-filter')[0].innerHTML = getInfoMessages('Filtro: ' + label, 'info', 3, true);
+              }
+              if (chart !=null){
+                chart.destroy();
+              }
+              if (typeof num_data_visualized !== 'undefined') {  
+                createChart(result, num_data_visualized);
+              }
+              else {
+                createChart(result);  
+              }
+              if (typeof t != "undefined") {
+                t.clear().draw();
+                createTable(result);
+                }
+          }
+        
+    })
+    });
+    }
+</script>

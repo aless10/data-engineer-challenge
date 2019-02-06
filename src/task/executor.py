@@ -16,14 +16,14 @@ redis_db = StrictRedis()
 class TaskExecutor(object):
 
     def __init__(self, request_schema_class, response_schema_class, response_model_class):
-        self.request_schema = request_schema_class()
+        self.request_schema = request_schema_class(strict=True)
         self.response_schema = response_schema_class()
         self.response_model_class = response_model_class
         self.scheduler = None
         self.response = None
 
     def run(self):
-        request_body = request.get_json(force=True)
+        request_body = request.form
         request_model, errors = self.request_schema.load(request_body)
 
         if errors:

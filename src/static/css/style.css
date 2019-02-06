@@ -1,0 +1,15 @@
+#header_span_id {
+    font-size: 2rem;
+    margin-top: 0.5rem;
+    margin-left: 2rem;
+    color: black;
+}
+
+#company-logo {
+    margin-top: 0.5rem;
+    margin-left: 1rem;
+}
+
+.response {
+	display: none;
+}

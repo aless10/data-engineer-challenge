@@ -10,6 +10,9 @@ from src.utils.json import json
 
 class GearmanScheduler(Scheduler):
 
+    name = "gearman"
+    icon = "images/gearman.jpg"
+
     def __init__(self, host, port, max_retries, poll_timeout):
         server = ":".join([host, str(port)])
         self.connection = GearmanClient([server])

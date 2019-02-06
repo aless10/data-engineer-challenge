@@ -7,8 +7,8 @@ from src.model.base import BaseResponse
 
 class TaskRequest:
 
-    def __init__(self, total_events=None, start_date=None, end_date=None, datetime_range=None, scheduler=None):
-        self.total_events = total_events
+    def __init__(self, events=None, start_date=None, end_date=None, datetime_range=None, scheduler=None):
+        self.events = events
         self.start_date = start_date
         self.end_date = end_date
         self.datetime_range = datetime_range
