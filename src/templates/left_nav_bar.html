@@ -1,0 +1,191 @@
+<div class="main-menu">
+  
+<ul id="slide-out" class="side-nav" style="background: {{ navbar_color}}; border-color: {{ navbar_color}};">
+  <li><a href="#" class="button-collapse-1">
+  <i class="material-icons mat real-mat">close</i></a></li>  
+    <li>
+        <a href="/">
+            <i class="material-icons mat real-mat" title="Dashboard">home</i>
+            <span class="nav-text">
+                Dashboard
+            </span>
+        </a>
+      
+    </li>
+    <li class="no-padding">
+        <ul class="collapsible">
+          <li>
+            <a class="collapsible-header"><i class="mat material-icons real-mat">arrow_drop_down</i><span class="nav-text">
+                Imported vs Processed
+            </span></a>
+            <div class="collapsible-body">
+              <ul>
+                <li>
+                    <a href="{{ url_for('imported_processed_routes.imported_processed') }}">
+                        <i class="sub-mat material-icons real-mat" title="History">insert_chart</i>
+                        <span class="sub-nav-text">
+                            Imported vs Processed - H
+                        </span>
+                    </a>    
+                </li>
+                <li>
+                    <a href="{{ url_for('imported_processed_routes.imported_processed_last_period') }}">
+                       <i class="sub-mat material-icons real-mat">cloud_upload</i>
+                        <span class="sub-nav-text">
+                            Imported vs Processed - UP
+                        </span>
+                    </a>   
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </li>
+    <li class="no-padding">
+        <ul class="collapsible">
+          <li>
+            <a class="collapsible-header"><i class="mat material-icons real-mat">arrow_drop_down</i><span class="nav-text">
+                OK vs KO
+            </span></a>
+            <div class="collapsible-body">
+              <ul>
+                <li class="has-subnav">
+                    <a href="{{ url_for('ok_ko_routes.ok_ko') }}">
+                        <i class="sub-mat material-icons real-mat">done</i>
+                        <span class="sub-nav-text">
+                            OK vs KO - History
+                        </span>
+                    </a>
+                </li>
+                <li  class="has-subnav">
+                    <a href="{{ url_for('ok_ko_routes.ok_ko_last_period')}}">
+                        <i class="sub-mat material-icons real-mat">done_all</i>
+                        <span class="sub-nav-text">
+                            OK vs KO - Ultimo Periodo
+                        </span>
+                    </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </li>
+    <li class="has-subnav">
+        <a href="{{ url_for('call_routes.call_id_listed') }}">
+           <i class="mat material-icons real-mat">headset_mic</i>
+            <span class="nav-text">
+                CallId totali
+            </span>
+        </a>
+       
+    </li>
+    <li class="has-subnav">
+        <a href="{{ url_for('index_routes.index_calls') }}">
+            <i class="mat material-icons real-mat">filter_9_plus</i>
+            <span class="nav-text">
+                Lista Indici
+            </span>
+        </a>
+    </li>
+    <li class="no-padding">
+        <ul class="collapsible">
+          <li>
+            <a class="collapsible-header"><i class="mat material-icons real-mat">arrow_drop_down</i><span class="nav-text">
+                Keyword Spotting
+            </span></a>
+            <div class="collapsible-body">
+              <ul>
+                <li>
+                    <a href="{{ url_for('ks_routes.home_ks') }}">
+                        <i class="material-icons sub-mat real-mat" title="Keyword">pageview</i>
+                        <span class="sub-nav-text">
+                            Keyword Spotting - Home
+                        </span>
+                    </a>
+                </li>
+                <li class="has-subnav">
+                    <a href="{{ url_for('ks_routes.blacklist_ks') }}">
+                        <i class="sub-mat material-icons real-mat">thumb_down</i>
+                        <span class="sub-nav-text">
+                            Blacklist
+                        </span>
+                    </a>
+                </li>
+                <li class="has-subnav">
+                    <a href="{{ url_for('ks_routes.map_view') }}">
+                        <i class="sub-mat material-icons real-mat">map</i>
+                        <span class="sub-nav-text">
+                            Mappa
+                        </span>
+                    </a>
+                </li>
+                <li class="has-subnav">
+                    <a href="{{ url_for('ks_routes.issue_category_ks') }}">
+                        <i class="sub-mat material-icons real-mat">device_hub</i>
+                        <span class="sub-nav-text">
+                            Categorie
+                        </span>
+                    </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </li>
+    <li class="has-subnav">
+        <a href="{{ url_for('template_routes.template_view') }}">
+            <i class="mat material-icons real-mat">favorite</i>
+            <span class="nav-text">
+                I miei template
+            </span>
+        </a>
+    </li>
+
+    
+    <li>
+       <a href="{{ url_for('user_routes.profile')}}">
+            <i class="mat material-icons real-mat">person</i>
+            <span id="my_profile" class="nav-text">
+                Profilo
+            </span>
+        </a>
+    </li>
+    <li>
+       <a href="{{ url_for('docs_routes.doc_home')}}">
+            <i class="mat material-icons real-mat">description</i>
+            <span class="nav-text">
+                Documentazione
+            </span>
+        </a>
+    </li>
+    {% if g.user.id == 1 %}
+    <li>
+       <a href="{{ url_for('dev_docs_routes.doc_super_admin')}}">
+            <i class="mat material-icons real-mat">code</i>
+            <span class="nav-text">
+                Dev
+            </span>
+        </a>
+    </li>
+    <li>
+       <a href="{{ url_for('template_routes.create_chart')}}">
+            <i class="mat material-icons real-mat">build</i>
+            <span class="nav-text">
+                Crea chart
+            </span>
+        </a>
+    </li>
+    {% endif %}
+    <li>
+       <a href="{{ url_for('user_routes.logout')}}">
+            <i id="logout" class="mat material-icons real-mat">exit_to_app</i>
+            <span class="nav-text">
+                Logout
+            </span>
+        </a>
+    </li>  
+</ul>
+</div>
+<a href="#" id="menu-button" data-activates="slide-out" class="button-collapse">
+  <i class="mat material-icons menu-button">menu</i>
+</a>

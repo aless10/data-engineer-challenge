@@ -8,7 +8,7 @@ import configparser
 import os
 
 
-class Scheduler(abc.ABCMeta):
+class Scheduler(metaclass=abc.ABCMeta):
 
     name = None
 

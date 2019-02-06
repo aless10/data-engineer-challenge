@@ -2,7 +2,7 @@
 
 from __future__ import absolute_import
 
-from marshmallow import Schema, fields, post_load, pre_load
+from marshmallow import Schema, fields, post_load
 
 from src.schema.base import BaseResponseSchema
 from src.model.task import TaskRequest
@@ -10,18 +10,14 @@ from src.model.task import TaskRequest
 
 class RequestSchema(Schema):
 
-    total_events = fields.Int(required=True)
+    events = fields.Int(required=True)
     start_date = fields.Date(required=True)
     end_date = fields.Date(required=True)
     scheduler = fields.Str(missing="celery")
 
-    @pre_load
-    def add_datetime_range(self, data):
-        data["datetime_range"] = data["end_date"] - data['start_date']
-        return data
-
     @post_load
     def make_task_params(self, data):
+        data["datetime_range"] = data["end_date"] - data['start_date']
         return TaskRequest(**data)
 
 
