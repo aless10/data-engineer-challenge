@@ -5,6 +5,7 @@ import logging
 from flask import request, make_response
 from redis import StrictRedis
 
+from src.schedulers.connection import SCHEDULERS
 from src.utils.exceptions import SchedulerTimedOut
 from src.views.utils import DEFAULT_HEADERS
 
@@ -30,7 +31,7 @@ class TaskExecutor(object):
             response_model = self.response_model_class.for_failure('Failed Schema Validation', errors)
         else:
             try:
-                self.scheduler = request_model.scheduler
+                self.scheduler = SCHEDULERS[request_model.scheduler].make()
                 task_payload = request_model.prepare_task_payload()
                 scheduler_response = self.scheduler.schedule(task_payload)
                 response_model = self.response_model_class.from_scheduler_response(scheduler_response, request_model)

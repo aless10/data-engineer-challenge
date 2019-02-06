@@ -11,6 +11,7 @@ from src.utils.json import json
 class GearmanScheduler(Scheduler):
 
     def __init__(self, host, port, max_retries, poll_timeout):
+        super(GearmanScheduler, self).__init__()
         server = ":".join([host, str(port)])
         self.connection = GearmanClient([server])
         self.max_retries = max_retries
