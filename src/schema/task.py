@@ -17,7 +17,7 @@ class RequestSchema(Schema):
 
     @post_load
     def make_task_params(self, data):
-        data["datetime_range"] = data["end_date"] - data['start_date']
+        data["datetime_range"] = (data["end_date"] - data['start_date']).total_seconds()
         return TaskRequest(**data)
 
 

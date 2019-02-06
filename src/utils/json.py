@@ -9,7 +9,7 @@ import json
 class DatetimeJSONEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, (datetime.datetime, datetime.date)):
-            return str(obj)
+            return obj.isoformat()
         return super(DatetimeJSONEncoder, self).default(obj)
 
 

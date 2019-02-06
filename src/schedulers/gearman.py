@@ -5,7 +5,7 @@ from __future__ import absolute_import
 from python3_gearman import GearmanClient, PRIORITY_LOW
 from src.utils.exceptions import SchedulerTimedOut
 from src.schedulers.base import Scheduler
-from src.utils.json import json
+from src.utils import json
 
 
 class GearmanScheduler(Scheduler):
@@ -13,7 +13,8 @@ class GearmanScheduler(Scheduler):
     name = "gearman"
     icon = "images/gearman.jpg"
 
-    def __init__(self, host, port, max_retries, poll_timeout):
+    def __init__(self, host, port, max_retries=3, poll_timeout=60):
+        super(GearmanScheduler, self).__init__()
         server = ":".join([host, str(port)])
         self.connection = GearmanClient([server])
         self.max_retries = max_retries
