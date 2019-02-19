@@ -2,7 +2,6 @@
 
 from __future__ import absolute_import
 
-import argparse
 import logging
 import random
 import time
@@ -49,9 +48,13 @@ def perf_timer():
         long_ops()
     """
     start_time = datetime.now()
-    yield
-    end_time = datetime.now()
-    log.info(end_time - start_time)
+    try:
+        yield
+    except Exception as e:
+        log.error("An exception occurred: %s", e)
+    finally:
+        end_time = datetime.now()
+        log.info(end_time - start_time)
 
 
 def time_logged(f):
@@ -61,29 +64,3 @@ def time_logged(f):
             return f(*args, **kwargs)
 
     return wrapper
-
-
-def parse_cli_arguments(cli_args):
-    parser = argparse.ArgumentParser('[DatENG]')
-
-    parser.add_argument(
-        '--number-of-events',
-        dest='num_of_events', required=True, type=int,
-        help='Number of fake events to generate'
-    )
-
-    parser.add_argument(
-        '--date-from',
-        dest='date_from', nargs='+',
-        help='Processing date from, in YYYYMMDD %I:%M:%S format. Leave empty for Now.'
-    )
-
-    parser.add_argument(
-        '--date-to',
-        dest='date_to', nargs='+',
-        help='Processing date to, in YYYYMMDD %I:%M:%S format. Leave empty for Now.'
-    )
-
-    parsed_args = parser.parse_args(cli_args)
-
-    return parsed_args

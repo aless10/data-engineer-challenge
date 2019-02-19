@@ -6,8 +6,6 @@ $(document).on('submit', '#run-task', function(e){
               'end-date': $("#end-date").val(),
               'scheduler': $("#scheduler").val()
           });
-      var url = "{{ url_for('task-view') }}";
-      console.log(url);
       $.ajax({
           type:'POST',
           url: "/",

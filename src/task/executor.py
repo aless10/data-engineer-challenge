@@ -3,15 +3,12 @@
 
 import logging
 from flask import request, make_response
-from redis import StrictRedis
 
 from src.schedulers.connection import SCHEDULERS
 from src.utils.exceptions import SchedulerTimedOut
 from src.views.utils import DEFAULT_HEADERS
 
 log = logging.getLogger()
-
-redis_db = StrictRedis()
 
 
 class TaskExecutor(object):
@@ -40,15 +37,3 @@ class TaskExecutor(object):
 
         response_body = self.response_schema.dumps(response_model)
         self.response = make_response(response_body.data, DEFAULT_HEADERS)
-
-#
-# @time_logged
-# def main(cli_args):
-#     args = parse_cli_arguments(cli_args)
-#     loop = asyncio.get_event_loop()
-#     asyncio.set_event_loop(loop)
-#     task_list = [asyncio.ensure_future(add_event_to_queue(args.date_from, args.date_to, redis_db))
-#                  for _ in range(args.num_of_events)]
-#     redis_task = asyncio.gather(*task_list)
-#     loop.run_until_complete(redis_task)
-#     redis_db.hset()
